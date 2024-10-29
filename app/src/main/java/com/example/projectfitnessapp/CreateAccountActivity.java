@@ -20,7 +20,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
 
     // UI Elements
-    private EditText etUsername, etPassword, etConfirmPassword, etName, etAge, etHeight, etWeight;
+    private EditText etPassword, etConfirmPassword, etName, etAge, etHeight, etWeight;
     private Button btnCreateAccount, btnGoBack;
 
     @Override
@@ -33,7 +33,6 @@ public class CreateAccountActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         // Initialize UI elements
-        etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
         etName = findViewById(R.id.etName);
@@ -55,7 +54,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
     private void createAccount() {
-        String username = etUsername.getText().toString();
+        int userId;
         String password = etPassword.getText().toString();
         String confirmPassword = etConfirmPassword.getText().toString();
         String name = etName.getText().toString();
@@ -79,7 +78,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                         mDatabase.child("Users").child(firebaseUserId).setValue(user);
 
                         // Create Person object for user profile without BMI
-                        Person person = new Person(userId, userId, name, age, weight, height, 0);
+                        Person person = new Person(userId, name, age, weight, height, 0);
                         mDatabase.child("Persons").child(firebaseUserId).setValue(person)
                                 .addOnCompleteListener(task1 -> {
                                     if (task1.isSuccessful()) {
