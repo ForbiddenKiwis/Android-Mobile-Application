@@ -54,42 +54,42 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
     private void createAccount() {
-        int userId;
-        String password = etPassword.getText().toString();
-        String confirmPassword = etConfirmPassword.getText().toString();
-        String name = etName.getText().toString();
-        int age = Integer.parseInt(etAge.getText().toString());
-        float height = Float.parseFloat(etHeight.getText().toString());
-        float weight = Float.parseFloat(etWeight.getText().toString());
-
-        if (!password.equals(confirmPassword)) {
-            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        mAuth.createUserWithEmailAndPassword(username, password)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        String firebaseUserId = mAuth.getCurrentUser().getUid();
-                        int userId = firebaseUserId.hashCode();
-
-                        // Create User object for authentication
-                        User user = new User(userId, password);
-                        mDatabase.child("Users").child(firebaseUserId).setValue(user);
-
-                        // Create Person object for user profile without BMI
-                        Person person = new Person(userId, name, age, weight, height, 0);
-                        mDatabase.child("Persons").child(firebaseUserId).setValue(person)
-                                .addOnCompleteListener(task1 -> {
-                                    if (task1.isSuccessful()) {
-                                        Toast.makeText(this, "Account Created Successfully!", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(this, "Failed to save user profile!", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                    } else {
-                        Toast.makeText(this, "Account Creation Failed!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+//        int userId = 200;
+//        String password = etPassword.getText().toString();
+//        String confirmPassword = etConfirmPassword.getText().toString();
+//        String name = etName.getText().toString();
+//        int age = Integer.parseInt(etAge.getText().toString());
+//        float height = Float.parseFloat(etHeight.getText().toString());
+//        float weight = Float.parseFloat(etWeight.getText().toString());
+//
+//        if (!password.equals(confirmPassword)) {
+//            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        mAuth.createUserWithEmailAndPassword(userId, password)
+//                .addOnCompleteListener(this, task -> {
+//                    if (task.isSuccessful()) {
+//                        String firebaseUserId = mAuth.getCurrentUser().getUid();
+//                        int userId = firebaseUserId.hashCode();
+//
+//                        // Create User object for authentication
+//                        User user = new User(userId, password);
+//                        mDatabase.child("Users").child(firebaseUserId).setValue(user);
+//
+//                        // Create Person object for user profile without BMI
+//                        Person person = new Person(userId, name, age, weight, height, 0);
+//                        mDatabase.child("Persons").child(firebaseUserId).setValue(person)
+//                                .addOnCompleteListener(task1 -> {
+//                                    if (task1.isSuccessful()) {
+//                                        Toast.makeText(this, "Account Created Successfully!", Toast.LENGTH_SHORT).show();
+//                                    } else {
+//                                        Toast.makeText(this, "Failed to save user profile!", Toast.LENGTH_SHORT).show();
+//                                    }
+//                                });
+//                    } else {
+//                        Toast.makeText(this, "Account Creation Failed!", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
     }
 }
